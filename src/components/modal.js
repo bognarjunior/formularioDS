@@ -1,42 +1,37 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { Text, View, Modal, StyleSheet } from 'react-native';
+import Button from './button';
 
-import Button from '../../components/button';
-
-export default class FeedBackScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  goto = () => {
-    this.props.navigation.navigate('Main');
-  }
-
-  render() {
-    return (
+const ModalComponent = ({
+  visible, label, onPress
+}) => (
+  <View>
+    <Modal
+      animationType="slide"
+      transparent={false}
+      visible={visible}
+      onRequestClose={() => {
+        Alert.alert('Modal has been closed.');
+      }}>
       <View style={styles.container}>
         <View style={styles.feedback}>
-          <Text style={styles.text}>Os dados foram enviados e o cadastro será aprovado em 48 horas.</Text>
+          <Text style={styles.text}>{label}</Text>
         </View>
         
         <View style={styles.button}>
           <Button 
             label='Home'
-            onPress={this.goto}
+            onPress={onPress}
           />
         </View>
       </View>
-    );
-  }
-}
-
+    </Modal>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderWidth: 1,
     flexDirection: "column",
     justifyContent: "center",
     alignContent: "center"
@@ -48,7 +43,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    color: '#3939f7',
+    color: '#FF0000',
     textAlign: 'center',
     fontSize: 28,
   },
@@ -57,3 +52,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
+
+
+export default ModalComponent;

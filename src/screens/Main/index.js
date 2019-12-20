@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Modal, TouchableHighlight, Text, Alert } from 'react-native';
+import { View, StyleSheet,} from 'react-native';
 import Input from '../../components/input';
 import Button from '../../components/button';
+import ModalComponent from '../../components/modal';
 
 export default class MainScreen extends Component {
   constructor(props) {
@@ -12,12 +13,13 @@ export default class MainScreen extends Component {
       address: '',
       modalVisible: false,
     };
+    console.log(this.state.modalVisible)
   }
   
   goto = () => {
     const { name, age, address } = this.state;
     if (name === '' || age === 0 || address === '' ) {
-      this.setModalVisible(true);
+      this.setModalVisible();
     } else {
       this.props.navigation.navigate('List', this.state);
     }
@@ -35,9 +37,11 @@ export default class MainScreen extends Component {
     { label: "Endereço", onChangeText: this.onChangeAddress, keyboardType: "default"}
   ];
 
-  setModalVisible(visible) {
+  setModalVisible = () => {
+    const visible = !this.state.modalVisible
     this.setState({modalVisible: visible});
   }
+  
   renderInput = () => {
     return this.inputs.map(item => (
       <Input 
@@ -52,29 +56,10 @@ export default class MainScreen extends Component {
   }
 
   render() {
+    console.log(this.state.modalVisible)
     return (
       <View style={styles.container}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text>Por favor, Preencha todos os dados</Text>
-
-              
-              <Button 
-                label='Fechar'
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}
-              />
-            </View>
-          </View>
-        </Modal>
+        <ModalComponent visible={this.state.modalVisible} onPress={this.setModalVisible} label="Por favor, Preencha todos os dados!"/>
         <View style={styles.inputs}>
           {this.renderInput()}
         </View>
@@ -90,7 +75,6 @@ export default class MainScreen extends Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
