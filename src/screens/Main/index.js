@@ -13,7 +13,6 @@ export default class MainScreen extends Component {
       address: '',
       modalVisible: false,
     };
-    console.log(this.state.modalVisible)
   }
   
   goto = () => {
@@ -56,7 +55,6 @@ export default class MainScreen extends Component {
   }
 
   render() {
-    console.log(this.state.modalVisible)
     return (
       <View style={styles.container}>
         <ModalComponent visible={this.state.modalVisible} onPress={this.setModalVisible} label="Por favor, Preencha todos os dados!"/>
